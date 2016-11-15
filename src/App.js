@@ -1,32 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Title from './Title';
 
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "Hello, World!"
-    };
-  } 
+	constructor(props) {
+		super(props);
+			this.state = {
+			PLAYER_ONE_SYMBOL: "X",
+			PLAYER_TWO_SYMBOL: "O",
+			currentTurn: "X",
+			board: [
+			"","","","","","","","",""
+			]
+		}
+	} 
 
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2 onClick={() => this.setState({message: this.state.message + '!'})}>{this.state.message}</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+	handleClick(index) {
+		this.state.board[index] = this.state.currentTurn
+		this.setState({
+			board: this.state.board,
+			currentTurn: this.state.currentTurn === this.state.PLAYER_ONE_SYMBOL ? this.state.PLAYER_TWO_SYMBOL : this.state.PLAYER_ONE_SYMBOL,
+		})
+		console.log(index);
+	}
 
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div className="board">
+				{
+					this.state.board.map((cell, index) => {
+						return <div onClick={() => this.handleClick(index)} className="square">{cell}</div>
+					})
+				}
+			</div>
+		);
+	}
 }
 
 export default App;
